@@ -1,8 +1,10 @@
 // Константы взяты по ТЗ
-const MIN_URL_VALUE = 1;
-const MAX_URL_VALUE = 25;
 const MIN_AVATAR_VALUE = 1;
 const MAX_AVATAR_VALUE = 6;
+const MIN_URL_VALUE = 1;
+const MAX_URL_VALUE = 25;
+const MIN_LIKE_VALUE = 15;
+const MAX_LIKE_VALUE = 200;
 
 // Массив с описаниями фотографий
 const PHOTO_DESCRIPTIONS = [
@@ -38,7 +40,7 @@ const getRandomInteger = (a, b) => {
 // Функция для получения случайного элемента из массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-//Функция для получение уникального значения из диапазона
+// Функция для получение уникального значения из диапазона
 const generateUniqueValue = (arr, minElement, maxElement) => {
   let value = getRandomInteger(minElement, maxElement);
   if (arr.length >= maxElement) {
@@ -64,8 +66,10 @@ const createPhotoDescription = () => ({
   id: generateUniqueValue([], 1, 999),
   url: `photos/${generateUniqueValue([], MIN_URL_VALUE, MAX_URL_VALUE)}.jpg`,
   decription: getRandomArrayElement(PHOTO_DESCRIPTIONS),
-  likes: getRandomInteger(15, 200),
+  likes: getRandomInteger(MIN_LIKE_VALUE, MAX_LIKE_VALUE),
   comments: Array.from({ length: 5 }, createComment),
 });
 
-createPhotoDescription();
+// Функция создает массив из 25 объектов - описаний фотографий
+const createArrayOfPhotoDescriptions = () => Array.from({ length: 25 }, createPhotoDescription);
+createArrayOfPhotoDescriptions();
