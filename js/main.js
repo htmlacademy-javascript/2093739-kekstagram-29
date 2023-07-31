@@ -1,3 +1,5 @@
 import {createArrayOfPhotoDescriptions} from './data.js';
+import {createMiniatures} from './miniatures.js';
 
-createArrayOfPhotoDescriptions();
+// Отрисовка 25 миниатюр из массива с объектами - описаниями
+createMiniatures(createArrayOfPhotoDescriptions());
