@@ -10,16 +10,19 @@ const getRandomInteger = (a, b) => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 // Функция для получение уникального значения из диапазона
-const generateUniqueValue = (arr, minElement, maxElement) => {
-  let value = getRandomInteger(minElement, maxElement);
-  if (arr.length >= maxElement) {
-    return null;
-  }
-  while (arr.includes(value)) {
-    value = getRandomInteger(minElement, maxElement);
-  }
-  arr.push(value);
-  return value;
+const generateUniqueValue = (minElement, maxElement) => {
+  const previousValues = [];
+  return () => {
+    let value = getRandomInteger(minElement, maxElement);
+    if (previousValues.length >= maxElement) {
+      return null;
+    }
+    while (previousValues.includes(value)) {
+      value = getRandomInteger(minElement, maxElement);
+    }
+    previousValues.push(value);
+    return value;
+  };
 };
 
 export {getRandomInteger, getRandomArrayElement, generateUniqueValue};

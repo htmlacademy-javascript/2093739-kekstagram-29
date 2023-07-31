@@ -1,10 +1,14 @@
 import {getRandomInteger, getRandomArrayElement, generateUniqueValue} from './util.js';
 
 // Константы взяты по ТЗ
-const MIN_AVATAR_VALUE = 1;
-const MAX_AVATAR_VALUE = 6;
+const MIN_DESCRIPTION_ID_VALUE = 1;
+const MAX_DESCRIPTION_ID_VALUE = 25;
 const MIN_URL_VALUE = 1;
 const MAX_URL_VALUE = 25;
+const MIN_COMMENT_ID_VALUE = 1;
+const MAX_COMMENT_ID_VALUE = 999;
+const MIN_AVATAR_VALUE = 1;
+const MAX_AVATAR_VALUE = 6;
 const MIN_LIKE_VALUE = 15;
 const MAX_LIKE_VALUE = 200;
 
@@ -31,9 +35,15 @@ const MESSAGES = [
 // Массив с именами коменнтаторов фотографий
 const COMMENTATOR_NAMES = ['Алина','Снежана','Мария','Анна','София','Жанна','Тимофей','Елисей','Александр','Павел','Никита','Олег'];
 
+// функции для создания уникальных значений
+const generateUniqueDescriptionId = generateUniqueValue(MIN_DESCRIPTION_ID_VALUE, MAX_DESCRIPTION_ID_VALUE);
+const generateUniquePhotoUrl = generateUniqueValue(MIN_URL_VALUE, MAX_URL_VALUE);
+const generateUniqueCommentId = generateUniqueValue(MIN_COMMENT_ID_VALUE, MAX_COMMENT_ID_VALUE);
+
+
 // Функция создает объект с комментарием к фотографии
 const createComment = () => ({
-  id: generateUniqueValue([], 1, 999),
+  id: generateUniqueDescriptionId(),
   avatar: `img/avatar-${generateUniqueValue([], MIN_AVATAR_VALUE, MAX_AVATAR_VALUE)}.svg`,
   message:getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(COMMENTATOR_NAMES),
@@ -41,8 +51,8 @@ const createComment = () => ({
 
 // Функция создает объект - описание фотографии
 const createPhotoDescription = () => ({
-  id: generateUniqueValue([], 1, 999),
-  url: `photos/${generateUniqueValue([], MIN_URL_VALUE, MAX_URL_VALUE)}.jpg`,
+  id: generateUniqueCommentId(),
+  url: `photos/${generateUniquePhotoUrl()}.jpg`,
   decription: getRandomArrayElement(PHOTO_DESCRIPTIONS),
   likes: getRandomInteger(MIN_LIKE_VALUE, MAX_LIKE_VALUE),
   comments: Array.from({ length: 5 }, createComment),
