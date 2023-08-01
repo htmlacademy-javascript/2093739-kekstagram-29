@@ -44,8 +44,8 @@ const generateUniqueCommentId = generateUniqueValue(MIN_COMMENT_ID_VALUE, MAX_CO
 // Функция создает объект с комментарием к фотографии
 const createComment = () => ({
   id: generateUniqueDescriptionId(),
-  avatar: `img/avatar-${generateUniqueValue([], MIN_AVATAR_VALUE, MAX_AVATAR_VALUE)}.svg`,
-  message:getRandomArrayElement(MESSAGES),
+  avatar: `img/avatar-${getRandomInteger(MIN_AVATAR_VALUE, MAX_AVATAR_VALUE)}.svg`,
+  message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(COMMENTATOR_NAMES),
 });
 
@@ -53,7 +53,7 @@ const createComment = () => ({
 const createPhotoDescription = () => ({
   id: generateUniqueCommentId(),
   url: `photos/${generateUniquePhotoUrl()}.jpg`,
-  decription: getRandomArrayElement(PHOTO_DESCRIPTIONS),
+  description: getRandomArrayElement(PHOTO_DESCRIPTIONS),
   likes: getRandomInteger(MIN_LIKE_VALUE, MAX_LIKE_VALUE),
   comments: Array.from({ length: 5 }, createComment),
 });
@@ -61,4 +61,34 @@ const createPhotoDescription = () => ({
 // Функция создает массив из 25 объектов - описаний фотографий
 const createArrayOfPhotoDescriptions = () => Array.from({ length: 25 }, createPhotoDescription);
 
-export {createArrayOfPhotoDescriptions};
+// Функция для создания аватарки к комментарию
+const createAvatar = (data) => {
+  const pictureImg = document.createElement('img');
+  pictureImg.classList.add('social__picture');
+  pictureImg.setAttribute('src', data.avatar);
+  pictureImg.setAttribute('alt', data.name);
+  pictureImg.setAttribute('width', 35);
+  pictureImg.setAttribute('height', 35);
+  return pictureImg;
+};
+
+// Функция для создания текста комментария
+const createCommentMessage = (data) => {
+  const textComment = document.createElement('p');
+  textComment.classList.add('social__text');
+  textComment.textContent = data.message;
+  return textComment;
+};
+
+// Сам комментарий как li в списке комментариев для полноэкранной версии
+const createCommentItem = (data) => {
+  const eachCommentFragment = document.createDocumentFragment();
+  const commentItem = document.createElement('li');
+  commentItem.classList.add('social__comment');
+  commentItem.append(createAvatar(data));
+  commentItem.append(createCommentMessage(data));
+  eachCommentFragment.append(commentItem);
+  return eachCommentFragment;
+};
+
+export {createArrayOfPhotoDescriptions, createCommentItem};
