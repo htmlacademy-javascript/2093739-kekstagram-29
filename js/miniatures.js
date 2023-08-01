@@ -1,10 +1,10 @@
-import {openFullImage} from './fullsize.js';
+import {openFullImage, closeFullImage} from './fullsize.js';
 
 const miniatureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const pictures = document.querySelector('.pictures');
 const miniaturesListFragment = document.createDocumentFragment();
 
-// Функция для отрисовки миниатюр + замыкание на функцию полноэкранной отрисовки
+// Функция для отрисовки миниатюр + закрытие и открытие полноэкранного варианта
 const createMiniatures = (miniature) => {
   miniature.forEach((element) => {
     const miniatureElement = miniatureTemplate.cloneNode(true);
@@ -14,6 +14,7 @@ const createMiniatures = (miniature) => {
     miniatureElement.querySelector('.picture__comments').textContent = element.comments.length;
     miniaturesListFragment.append(miniatureElement);
     openFullImage(miniatureElement, element);
+    closeFullImage();
   });
   pictures.append(miniaturesListFragment);
 };

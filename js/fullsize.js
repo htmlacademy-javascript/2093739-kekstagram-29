@@ -1,5 +1,7 @@
 import {createCommentItem} from './data.js';
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 // Функция по событию клика на миниатюру принимает данные из объекта - комментария и отрисовывает полноэкранный вариант изображения с всеми комментариями
 const openFullImage = (item, data) => {
   item.addEventListener('click', (evt) => {
@@ -17,4 +19,19 @@ const openFullImage = (item, data) => {
   });
 };
 
-export {openFullImage};
+const closeFullImage = () => {
+  const closeButton = document.querySelector('.big-picture__cancel');
+  window.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      document.querySelector('.big-picture').classList.add('hidden');
+      document.querySelector('body').classList.remove('modal-open');
+    }
+  });
+  closeButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    document.querySelector('.big-picture').classList.add('hidden');
+    document.querySelector('body').classList.remove('modal-open');
+  });
+};
+
+export {openFullImage, closeFullImage};

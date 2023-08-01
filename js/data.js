@@ -61,6 +61,7 @@ const createPhotoDescription = () => ({
 // Функция создает массив из 25 объектов - описаний фотографий
 const createArrayOfPhotoDescriptions = () => Array.from({ length: 25 }, createPhotoDescription);
 
+// Функция для создания аватарки к комментарию
 const createAvatar = (data) => {
   const pictureImg = document.createElement('img');
   pictureImg.classList.add('social__picture');
@@ -71,6 +72,7 @@ const createAvatar = (data) => {
   return pictureImg;
 };
 
+// Функция для создания текста комментария
 const createCommentMessage = (data) => {
   const textComment = document.createElement('p');
   textComment.classList.add('social__text');
@@ -78,6 +80,7 @@ const createCommentMessage = (data) => {
   return textComment;
 };
 
+// Сам комментарий как li в списке комментариев для полноэкранной версии
 const createCommentItem = (data) => {
   const eachCommentFragment = document.createDocumentFragment();
   const commentItem = document.createElement('li');
