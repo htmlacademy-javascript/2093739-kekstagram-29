@@ -2,9 +2,9 @@ import {isEscapeKey} from './fullsize.js';
 import {resetEffects} from './photo-effects.js';
 import {resetScale} from './photo-scale.js';
 
-const MAX_HASHTAGS_VALUE = 5;
-const HASHTAGS_SYMBOL_RULES = /^#[a-zа-яё0-9]{1,19}$/i;
-const HASHTAGS_ERROR_TEXT = 'Неправильно прописаны хештеги';
+const MAX_HASHTAGS_COUNT = 5;
+const HASHTAGS_RULES = /^#[a-zа-яё0-9]{1,19}$/i;
+const TAGS_ERROR_TEXT = 'Неправильно прописаны хештеги';
 
 const form = document.querySelector('.img-upload__form');
 const submitButton = form.querySelector('.img-upload__submit');
@@ -17,6 +17,7 @@ const cancelButton = document.querySelector('#upload-cancel');
 
 const successElement = document.querySelector('#success').content.querySelector('.success');
 const successButtonElement = document.querySelector('#success').content.querySelector('.success__button');
+
 const errorElement = document.querySelector('#error').content.querySelector('.error');
 const errorButtonElement = document.querySelector('#error').content.querySelector('.error__button');
 
@@ -34,8 +35,8 @@ const showModal = () => {
 
 const hideModal = () => {
   form.reset();
-  resetEffects();
   resetScale();
+  resetEffects();
   pristine.reset();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -48,7 +49,10 @@ const ifInTextFieldFocused = () =>
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt) && !ifInTextFieldFocused()) {
     evt.preventDefault();
-    hideModal();
+    const hasHiddenPopup = document.querySelector('.error');
+    if (!hasHiddenPopup) {
+      hideModal();
+    }
   }
 }
 
@@ -60,9 +64,9 @@ const onFileInputChange = () => {
   showModal();
 };
 
-const isValidTag = (tag) => HASHTAGS_SYMBOL_RULES.test(tag);
+const isValidTag = (tag) => HASHTAGS_RULES.test(tag);
 
-const hasValidCount = (tags) => tags.length <= MAX_HASHTAGS_VALUE;
+const hasValidCount = (tags) => tags.length <= MAX_HASHTAGS_COUNT;
 
 const hasUniqueTags = (tags) => {
   const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
@@ -77,7 +81,7 @@ const validateTags = (value) => {
 pristine.addValidator(
   hashtagField,
   validateTags,
-  HASHTAGS_ERROR_TEXT
+  TAGS_ERROR_TEXT
 );
 
 const unblockSubmitButton = () => {
