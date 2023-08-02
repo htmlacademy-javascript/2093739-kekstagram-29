@@ -3,6 +3,7 @@ import {openFullImage, closeFullImage} from './fullsize.js';
 const miniatureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const pictures = document.querySelector('.pictures');
 const miniaturesListFragment = document.createDocumentFragment();
+const imgFiltersElement = document.querySelector('.img-filters');
 
 // Функция для отрисовки миниатюр + закрытие и открытие полноэкранного варианта
 const createMiniatures = (miniature) => {
@@ -16,7 +17,12 @@ const createMiniatures = (miniature) => {
     openFullImage(miniatureElement, element);
     closeFullImage();
   });
+
+  pictures.querySelectorAll('.picture').forEach((element) => {
+    element.remove();
+  });
   pictures.append(miniaturesListFragment);
+  imgFiltersElement.classList.remove('img-filters--inactive');
 };
 
 export {createMiniatures};
