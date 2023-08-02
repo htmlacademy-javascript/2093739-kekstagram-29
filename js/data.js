@@ -55,7 +55,7 @@ const createPhotoDescription = () => ({
   url: `photos/${generateUniquePhotoUrl()}.jpg`,
   description: getRandomArrayElement(PHOTO_DESCRIPTIONS),
   likes: getRandomInteger(MIN_LIKE_VALUE, MAX_LIKE_VALUE),
-  comments: Array.from({ length: 5 }, createComment),
+  comments: Array.from({ length: 25 }, createComment),
 });
 
 // Функция создает массив из 25 объектов - описаний фотографий
