@@ -1,5 +1,6 @@
 import {isEscapeKey} from './fullsize.js';
 import {resetEffects} from './photo-effects.js';
+import {resetScale} from './photo-scale.js';
 
 const MAX_HASHTAGS_VALUE = 5;
 const HASHTAGS_SYMBOL_RULES = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -27,8 +28,9 @@ const showModal = () => {
 
 const hideModal = () => {
   form.reset();
-  pristine.reset();
   resetEffects();
+  resetScale();
+  pristine.reset();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
