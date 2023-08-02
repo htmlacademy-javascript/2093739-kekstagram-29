@@ -70,4 +70,4 @@ const closeFullImage = () => {
   });
 };
 
-export {openFullImage, closeFullImage};
+export {openFullImage, closeFullImage, isEscapeKey};
