@@ -54,7 +54,7 @@ const DEFAULT_PHOTO_EFFECT = PHOTO_EFFECTS[0];
 let chosenEffect = DEFAULT_PHOTO_EFFECT;
 
 const image = document.querySelector('.img-upload__preview img');
-const effects = document.querySelector('.effects');
+
 const slider = document.querySelector('.effect-level__slider');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const effectLevel = document.querySelector('.effect-level__value');
@@ -121,7 +121,6 @@ noUiSlider.create(slider, {
 });
 hideSlider();
 
-effects.addEventListener('change', onEffectsChange);
 slider.noUiSlider.on('update', onSliderUpdate);
 
-export {resetEffects};
+export {resetEffects, onEffectsChange};
