@@ -1,5 +1,3 @@
-
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 const commentsList = document.querySelector('.social__comments');
 const commentsLoader = document.querySelector('.comments-loader');
@@ -101,6 +99,7 @@ function closeFullImage() {
   document.removeEventListener('keydown', onDocumentKeydown);
   shownComments = 0;
   commentsLoader.removeEventListener('click', loadMoreComments);
+  closeButton.removeEventListener('click', onClickButtonClose);
 }
 
 export {openFullImage, closeFullImage, isEscapeKey};

@@ -4,8 +4,7 @@ const SCALE_STEP = 25;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
 
-const smallerButtonForm = document.querySelector('.scale__control--smaller');
-const biggerButtonForm = document.querySelector('.scale__control--bigger');
+
 const scaleInputForm = document.querySelector('.scale__control--value');
 const image = document.querySelector('.img-upload__preview img');
 
@@ -34,7 +33,4 @@ const onBiggerButtonClick = () => {
 
 const resetScale = () => scaleImage(DEFAULT_SIZE);
 
-smallerButtonForm.addEventListener('click', onSmallerButtonClick);
-biggerButtonForm.addEventListener('click', onBiggerButtonClick);
-
-export {resetScale};
+export {resetScale, onSmallerButtonClick, onBiggerButtonClick};

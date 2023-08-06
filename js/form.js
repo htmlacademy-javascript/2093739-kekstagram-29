@@ -1,6 +1,6 @@
 import {isEscapeKey} from './fullsize.js';
-import {resetEffects} from './photo-effects.js';
-import {resetScale} from './photo-scale.js';
+import {resetEffects, onEffectsChange} from './photo-effects.js';
+import {resetScale, onSmallerButtonClick, onBiggerButtonClick} from './photo-scale.js';
 
 const MAX_HASHTAGS_COUNT = 5;
 const HASHTAGS_RULES = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -21,6 +21,10 @@ const successButtonElement = document.querySelector('#success').content.querySel
 const errorElement = document.querySelector('#error').content.querySelector('.error');
 const errorButtonElement = document.querySelector('#error').content.querySelector('.error__button');
 
+const smallerButtonForm = document.querySelector('.scale__control--smaller');
+const biggerButtonForm = document.querySelector('.scale__control--bigger');
+const effects = document.querySelector('.effects');
+
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
@@ -31,6 +35,10 @@ const showModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+  smallerButtonForm.addEventListener('click', onSmallerButtonClick);
+  biggerButtonForm.addEventListener('click', onBiggerButtonClick);
+  cancelButton.addEventListener('click', onCancelButtonClick);
+  effects.addEventListener('change', onEffectsChange);
 };
 
 const hideModal = () => {
@@ -41,13 +49,17 @@ const hideModal = () => {
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  smallerButtonForm.removeEventListener('click', onSmallerButtonClick);
+  biggerButtonForm.removeEventListener('click', onBiggerButtonClick);
+  cancelButton.removeEventListener('click', onCancelButtonClick);
+  effects.removeEventListener('change', onEffectsChange);
 };
 
-const ifInTextFieldFocused = () =>
+const TextFieldFocus = () =>
   document.activeElement === hashtagField || document.activeElement === commentField;
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt) && !ifInTextFieldFocused()) {
+  if (isEscapeKey(evt) && !TextFieldFocus()) {
     evt.preventDefault();
     const hasHiddenPopup = document.querySelector('.error');
     if (!hasHiddenPopup) {
@@ -56,13 +68,13 @@ function onDocumentKeydown(evt) {
   }
 }
 
-const onCancelButtonClick = () => {
+function onCancelButtonClick() {
   hideModal();
-};
+}
 
-const onFileInputChange = () => {
+function onFileInputChange() {
   showModal();
-};
+}
 
 const isValidTag = (tag) => HASHTAGS_RULES.test(tag);
 
@@ -132,6 +144,7 @@ const onBodyClick = (evt) => {
   if (evt.target.matches('.success') || evt.target.matches('.error')) {
     hideModalMessage();
     document.removeEventListener('click', onBodyClick);
+    cancelButton.removeEventListener('click', onCancelButtonClick);
   }
 };
 
@@ -163,6 +176,5 @@ const onFormSubmit = (cb) => {
 };
 
 fileField.addEventListener('change', onFileInputChange);
-cancelButton.addEventListener('click', onCancelButtonClick);
 
 export {onFormSubmit, hideModal, showFullSuccessMessage, showFullErrorMessage};
